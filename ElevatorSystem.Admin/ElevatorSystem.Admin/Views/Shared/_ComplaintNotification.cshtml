@@ -1,0 +1,126 @@
+﻿
+
+<li class="nav-item dropdown">
+
+    <a class="nav-link nav-icon" href="#" id="complaintSpan" data-bs-toggle="dropdown">
+        @*<i class='bx bx-chat'></i>*@
+
+    </a><!-- End Messages Icon -->
+
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+        <li class="dropdown-header" id="complaintCount1">
+           
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+        </li>
+
+        <div id="messageHeader">
+            @*<li>
+                    <hr class="dropdown-divider">
+                </li>
+
+                <li class="message-item">
+                    <a href="#">
+                        <img src="" alt="" class="rounded-circle">
+                        <div>
+                            <h4>buiquangminh</h4>
+                            <p>This elevator is broken !</p>
+                            <p>4 hrs. ago</p>
+                        </div>
+                    </a>
+                </li>*@
+        </div>
+
+
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+
+        <li class="dropdown-footer">
+            <a href="#">Show all messages</a>
+        </li>
+
+    </ul><!-- End Messages Dropdown Items -->
+
+</li><!-- End Messages Nav -->
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $.ajax({
+            url: '@Url.Action("ComplaintNotification", "Home")',
+            type: 'GET',
+            contentType: 'application/json',
+            //dataType: 'jsonp', jsonp is for sending to a site other than the current one
+
+              success: function (result) {
+                  $('#messageHeader').html("")
+                  var htmlString = ""
+                  for (var i = 0; i < result.length; i++) {
+
+                          htmlString += "<li>"
+                          htmlString += ` <hr class="dropdown-divider">`
+                          htmlString += `</li>`
+                      htmlString += ` <li class="message-item">`
+                    
+                          htmlString += ` <a href="#">`
+                          htmlString += ` <img src="${result[i].AddressLine2}" alt="" class="rounded-circle">`
+                          htmlString += "<div>"
+                          htmlString += `<h4>${result[i].FullName}</h4>`
+                          htmlString += `<p>${result[i].Title}</p>`
+                          htmlString += `<p>${result[i].TimeAgo} days ago</p>`
+                          htmlString += "</div>"
+                          htmlString += "</a>"
+                          htmlString += "</li>"
+                  }
+                  console.log(result)
+                  $('#messageHeader').html(htmlString)
+            }
+        });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $.ajax({
+            url: '@Url.Action("ComplaintCount", "Home")',
+            type: 'GET',
+            contentType: 'application/json',
+            //dataType: 'jsonp', jsonp is for sending to a site other than the current one
+
+              success: function (result) {
+                  $('#complaintSpan').html("")
+                  var htmlString = ""
+
+                  htmlString += `<i class='bx bx-chat'></i>`
+                  htmlString += `<span class="badge bg-success badge-number"> ${result}</span>`
+
+                  $('#complaintSpan').html(htmlString)
+            }
+        });
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $.ajax({
+            url: '@Url.Action("ComplaintCount", "Home")',
+            type: 'GET',
+            contentType: 'application/json',
+            //dataType: 'jsonp', jsonp is for sending to a site other than the current one
+
+              success: function (result) {
+                  $('#complaintCount1').html("")
+                  var htmlString = ""
+
+                  htmlString += `You have  ${result} new messages`
+
+                  $('#complaintCount1').html(htmlString)
+            }
+        });
+        });
+    </script>
+}
+
+

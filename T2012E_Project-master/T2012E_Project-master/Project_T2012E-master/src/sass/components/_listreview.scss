@@ -1,0 +1,116 @@
+
+  @media(min-width:568px){
+    .end{
+        margin-left: auto;
+    }
+  }
+  
+  @media(max-width:768px){
+    #post{
+        width: 100%;
+    }
+  }
+  #clicked{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: center;
+    width: 100%;
+    background-color: #ecb21f;
+    border-color: #a88734 #9c7e31 #846a29;
+    color: black;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 13px; 
+  }
+  
+  #profile{
+    background-color: unset;
+    
+  } 
+  
+  #post{
+    margin: 10px;
+    padding: 6px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-align: center;
+    background-color: #ecb21f;
+    border-color: #a88734 #9c7e31 #846a29;
+    color: black;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 13px;
+    width: 50%;
+  }
+
+  #nav-items li a,#profile{
+    text-decoration: none;
+    color: rgb(224, 219, 219);
+  }
+  
+  
+  .comments{
+    margin-top: 5%;
+    margin-left: 20px;
+  }
+  
+  .darker{
+    border: 1px solid #ecb21f;
+    float: right;
+    border-radius: 5px;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 10px;
+  }
+  
+  .comment{
+    // border: 1px solid rgb(195 210 210);
+    float: left;
+    border-radius: 5px;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-top: 10px;
+    width: 100%;
+     box-shadow: 2px 2px 2px 2px rgb(195 210 210);;
+    
+  }
+  .comment h4,.comment span,.darker h4,.darker span{
+    display: inline;
+  }
+  
+  .comment p,.comment span,.darker p,.darker span{
+    color: black;
+  }
+  
+  h1,h4{
+    color: black;
+    font-weight: bold;
+  }
+  label{
+    color: black;
+  }
+  
+  #align-form{
+    margin-top: 20px;
+  }
+  .form-group p a{
+    color: black;
+  }
+  
+  #checkbx{
+    background-color: black;
+  }
+  
+  #darker img{
+    margin-right: 15px;
+    position: static;
+  }
+  
+  .form-group input,.form-group textarea{
+    border: 1px solid rgba(16, 46, 46, 1);
+    border-radius: 12px;
+  }
+  
+.review-comment{
+    background-color: #fafafa;
+}

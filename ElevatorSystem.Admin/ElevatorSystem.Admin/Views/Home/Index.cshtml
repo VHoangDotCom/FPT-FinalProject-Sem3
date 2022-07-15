@@ -1,0 +1,268 @@
+﻿@{ ViewBag.Title = "Home Page"; }
+@*@using MultipleModelInOneView;*@
+
+@model ElevatorSystem.Admin.Models.ViewModels.AdminViewModel
+
+@{
+    @* Layout = "~/Views/Shared/_LayoutHome.cshtml";*@
+}
+}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-8">
+                <div class="row">
+
+                    <!-- Sales Card -->
+
+                    @Html.Partial("SalesReport")
+                    <!-- Revenue Card -->
+                    @Html.Partial("RevenueReport")
+                    <!-- End Revenue Card -->
+                    <!-- Customers Card -->
+                    @Html.Partial("_CustomersReport")
+                    <!-- End Customers Card -->
+                    <!-- Reports -->
+                    @Html.Partial("_ReportChart")
+                    <!-- End Reports -->
+                    <!-- Recent Sales -->
+                    @Html.Partial("_RecentSales")
+                    <!-- End Recent Sales -->
+                    <!-- Top Selling -->
+                    @*  @Html.Partial("ListAccount")*@
+                    <!-- End Top Selling -->
+
+                </div>
+            </div><!-- End Left side columns -->
+            <!-- Right side columns -->
+            <div class="col-lg-4">
+
+                <!-- Website Traffic -->
+                @Html.Partial("_ReportCategory")
+                <!-- End Website Traffic -->
+                <!-- News & Updates Traffic -->
+                @Html.Partial("NewestBlog")
+                <!-- End News & Updates -->
+
+            </div><!-- End Right side columns -->
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $.ajax({
+            url: '@Url.Action("ReturnListAcc", "Home")',
+            type: 'GET',
+            contentType: 'application/json',
+            //dataType: 'jsonp', jsonp is for sending to a site other than the current one
+
+              success: function (result) {
+                  $('#listAccount').html("")
+                  var htmlString = ""
+                  for (var i = 0; i < result.length; i++) {
+                      htmlString += "<tr>"
+                      htmlString += `<th scope='row'><a href='#'><img src='assets / img / product - 1.jpg' alt=''></a></th>`
+                      htmlString += `<td><a href='#' class='text - primary fw - bold'>Ut inventore ipsa voluptas nulla</a></td>`
+                      htmlString += `<td>${result[i].Email}</td>`
+                      htmlString += `<td class="fw - bold">${result[i].UserName}</td>`
+
+                      htmlString += "</tr>"
+
+                  }
+                  $('#listAccount').html(htmlString)
+            }
+        });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $.ajax({
+            url: '@Url.Action("GetProfile", "Manage")',
+            type: 'GET',
+            contentType: 'application/json',
+            //dataType: 'jsonp', jsonp is for sending to a site other than the current one
+
+              success: function (result) {
+                  $('#imageAccount').html("")
+                  var htmlString = ""
+                  for (var i = 0; i < result.length; i++) {
+
+                      htmlString += `<img src="${result[i].AddressLine2}" alt="Profile" class="rounded-circle">`
+                      htmlString += ` <span class="d-none d-md-block dropdown-toggle ps-2">${result[i].UserName}</span>`
+                  }
+
+                  $('#imageAccount').html(htmlString)
+            }
+        });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $.ajax({
+            url: '@Url.Action("GetProfile", "Manage")',
+            type: 'GET',
+            contentType: 'application/json',
+            //dataType: 'jsonp', jsonp is for sending to a site other than the current one
+
+              success: function (result) {
+                  $('#dropAccount').html("")
+                  var htmlString = ""
+                  for (var i = 0; i < result.length; i++) {
+
+                      htmlString += ` <h6>${result[i].UserName}</h6>`
+                      htmlString += `  <h6>Admin ID: ${result[i].Id}</h6>`
+                  }
+
+                  $('#dropAccount').html(htmlString)
+            }
+        });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $.ajax({
+            url: '@Url.Action("ReturnRecentSale", "Home")',
+            type: 'GET',
+            contentType: 'application/json',
+            //dataType: 'jsonp', jsonp is for sending to a site other than the current one
+
+              success: function (result) {
+                  $('#listOrder').html("")
+                  var htmlString = ""
+                  for (var i = 0; i < result.length; i++) {
+
+                      htmlString += "<tr>"
+                      htmlString += `<th scope="row"><a href="#">#${i + 1}</a></th>`
+                      htmlString += `<td>${result[i].FullName}</td>`
+                      htmlString += `  <td><span class="badge bg-primary">In Processing</span></td>`
+                      htmlString += `<td>${result[i].Name}</td>`
+                      htmlString += ` <td>$${result[i].Price}</td>`
+                      htmlString += "</tr>"
+                  }
+                  console.log(result)
+                  $('#listOrder').html(htmlString)
+            }
+        });
+        });
+    </script>
+
+    <script>
+        var dataDate = [];
+        var dataOrder = [];
+        var arrayConvertData = [];
+
+
+        function fetchData() {
+            $.ajax({
+                type: "GET",
+                url: "/Charts/Result",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    dataDate = result.dataDate;
+                    for (var i = 0; i < dataDate.length; i++) {
+                        var converDate = dataDate[i].slice(6, 19);
+                        var newDate = new Date(parseInt(converDate)).toISOString();
+                        arrayConvertData.push(newDate)
+                    }
+                    for (var i = 0; i < result.dataOrder.length; i++) {
+                        dataOrder.push(result.dataOrder[i]);
+                    }
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+        fetchData();
+        document.addEventListener("DOMContentLoaded", () => {
+            new ApexCharts(document.querySelector("#reportsChart"), {
+                series: [{
+                    name: 'Sales',
+                    data: dataOrder,
+                }],
+                chart: {
+                    height: 350,
+                    type: 'area',
+                    toolbar: {
+                        show: false
+                    },
+                },
+                markers: {
+                    size: 4
+                },
+                colors: ['#4154f1'],
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.3,
+                        opacityTo: 0.4,
+                        stops: [0, 90, 100]
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth',
+                    width: 2
+                },
+                xaxis: {
+                    type: 'datetime',
+                    categories: arrayConvertData
+                },
+                tooltip: {
+                    x: {
+                        format: 'dd/MM/yy HH:mm'
+                    },
+                }
+            }).render();
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $.ajax({
+            url: '@Url.Action("SalesReport1", "Home")',
+            type: 'GET',
+            contentType: 'application/json',
+            //dataType: 'jsonp', jsonp is for sending to a site other than the current one
+
+              success: function (result) {
+                  $('#saleReport').html("")
+                  var htmlString = ""
+
+                      htmlString += `<h6>${result}</h6>`
+                      htmlString += `<span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>`
+
+                  $('#saleReport').html(htmlString)
+            }
+        });
+        });
+    </script>
+}
+

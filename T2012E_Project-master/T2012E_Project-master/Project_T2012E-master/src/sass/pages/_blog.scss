@@ -1,0 +1,56 @@
+
+.jumbotron {
+   background-color:  #e8f3ec!important;
+}
+
+.align-self-center{
+align-self: center!important;
+    padding: 20px 40px !important;
+}
+.font-weight-bold {
+     font-weight: 700 !important;
+ }
+ .spanborder span {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.44);
+    display: inline-block;
+    padding-bottom: 20px;
+    margin-bottom: -1px;
+}
+
+.main-app {
+    margin: 2% 10%;
+    border: 1px ridge #464141;
+    padding: 5%;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 20px;
+    color: #464141;
+   }
+    
+//    .container {
+//     border-bottom: #fff 2px ridge;
+//    }
+    
+   .pagination {
+    margin-top: 45px;
+    // margin-left: -40px;
+    display: flex;
+    list-style: none;
+    outline: none;
+   }
+    
+   .pagination>.active>a {
+    background-color: #8d9194;
+    color: #fff;
+   }
+    
+   .pagination>li>a {
+    border: 1px solid #8d9194;
+    padding: 5px 10px;
+    outline: none;
+    cursor: pointer;
+   }
+    
+   .pagination>li>a, .pagination>li>span {
+    color: #47ccde;
+    background-color: azure;
+   }
